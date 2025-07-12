@@ -1,33 +1,13 @@
 "use client";
 
-import { useAuth } from '@/contexts/AuthContext';
 import { PricingSection } from '@/components/PricingSection';
-import { useTrialStatus } from '@/hooks/useTrialStatus';
-// import { DemoWidget } from '@/components/DemoWidget';
-// import { MetricCard } from '@/components/MetricCard';
 import { TypewriterEffect } from '@/components/TypewriterEffect';
-import { FaReddit } from 'react-icons/fa';
-import { 
-  FaGithub, 
-  FaDiscord, 
-  FaProductHunt,
-  FaXTwitter,
-  FaHackerNews,
-  FaInstagram,
-  FaTiktok,
-  FaYoutube
-} from 'react-icons/fa6';
-import { 
- Lock, CreditCard, Moon
-} from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Link as ScrollLink } from 'react-scroll';
 import { VideoModal } from '@/components/VideoModal';
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 // Update workflowSteps to be more generic
 const workflowSteps = [
@@ -53,18 +33,6 @@ const workflowSteps = [
   }
 ];
 
-// Update platforms to be generic
-const platforms = [
-  { name: 'Platform 1', icon: FaGithub },
-  { name: 'Platform 2', icon: FaDiscord },
-  { name: 'Platform 3', icon: FaReddit },
-  { name: 'Platform 4', icon: FaProductHunt },
-  { name: 'Platform 5', icon: FaXTwitter },
-  { name: 'Platform 6', icon: FaHackerNews },
-  { name: 'Platform 7', icon: FaInstagram },
-  { name: 'Platform 8', icon: FaTiktok },
-  { name: 'Platform 9', icon: FaYoutube }
-];
 
 // Update workflowSections to be generic
 const workflowSections = [
@@ -126,72 +94,11 @@ const workflowSections = [
   }
 ];
 
-// Custom Hook to create section progress values
-function useSectionProgressValues(numSections: number) {
-  const { scrollYProgress } = useScroll();
-  
-  // Create all transforms at once, at the top level
-  const section1Progress = useTransform(
-    scrollYProgress,
-    [0 / numSections, 1 / numSections],
-    [0, 1]
-  );
-  const section2Progress = useTransform(
-    scrollYProgress,
-    [1 / numSections, 2 / numSections],
-    [0, 1]
-  );
-  const section3Progress = useTransform(
-    scrollYProgress,
-    [2 / numSections, 3 / numSections],
-    [0, 1]
-  );
-  const section4Progress = useTransform(
-    scrollYProgress,
-    [3 / numSections, 4 / numSections],
-    [0, 1]
-  );
 
-  return [section1Progress, section2Progress, section3Progress, section4Progress];
-}
-
-// Feature cards data
-const featureCards = [
-  {
-    title: "Authentication",
-    description: "Supabase auth with social providers",
-    icon: <Lock className="h-6 w-6 text-primary" />,
-    bgGradient: "from-blue-500/10 to-purple-500/10"
-  },
-  {
-    title: "Payments",
-    description: "Stripe subscription management",
-    icon: <CreditCard className="h-6 w-6 text-primary" />,
-    bgGradient: "from-green-500/10 to-emerald-500/10"
-  },
-  {
-    title: "Dark Mode",
-    description: "Built-in theme management",
-    icon: <Moon className="h-6 w-6 text-primary" />,
-    bgGradient: "from-orange-500/10 to-red-500/10"
-  }
-];
 
 export default function LandingPage() {
-  const { user } = useAuth();
-  const { isInTrial } = useTrialStatus();
   const [activeSection, setActiveSection] = useState("overview");
-  const sectionProgressValues = useSectionProgressValues(workflowSections.length);
-  
   const router = useRouter();
-
-  const [dashboardRef, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
-
-  const { scrollYProgress } = useScroll();
-
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   return (
@@ -277,11 +184,11 @@ export default function LandingPage() {
                 <pre className="relative rounded-xl bg-slate-900 p-8 shadow-2xl">
                   <code className="text-sm sm:text-base text-slate-100">
                     <TypewriterEffect text={`// 🚀 The Ultimate Dev Setup
-import { useCoffee, useCode } from '@/hooks/dev';
+import { useState } from 'react';
 
 export const DevLife = () => {
-  const { coffee } = useCoffee();
-  const { bugs } = useCode();
+  const [coffee, setCoffee] = useState(true);
+  const [bugs, setBugs] = useState(0);
   
   return (
     <div className="dev-life">
@@ -319,7 +226,7 @@ export const DevLife = () => {
       </div>
 
       {/* Other sections */}
-      {workflowSections.slice(1).map((section, index) => (
+      {workflowSections.slice(1).map((section) => (
         <motion.section
           key={section.id}
           id={section.id}

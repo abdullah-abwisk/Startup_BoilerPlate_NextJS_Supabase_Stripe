@@ -2,13 +2,11 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-// import { useAuth } from '@/contexts/AuthContext';
 import { useSubscription } from '@/hooks/useSubscription';
 import { StripeBuyButton } from '@/components/StripeBuyButton';
 import { SubscriptionStatus } from '@/components/SubscriptionStatus';
 
 export default function PaymentPage() {
-  // const { user } = useAuth();
   const { subscription, isLoading, error } = useSubscription();
   const router = useRouter();
 
